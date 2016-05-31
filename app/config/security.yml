@@ -1,0 +1,40 @@
+security:
+    encoders:
+       Symfony\Component\Security\Core\User\User: plaintext
+       BlogBundle\Entity\User: plaintext
+       #   algorithm: bcrypt
+       #   cost: 12
+
+    providers:
+        #in_memory:
+        #    memory:
+        #      users:
+        #        admin:
+        #          password: 7brnkzwFUNQ8t8CEbuVB9/Je3RctC5PYZNNvf1rr
+        #          roles: 'ROLE_USER'
+        db_provider:
+          entity:
+            class: BlogBundle:User
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        #dev:
+        #    pattern: ^/(_(profiler|wdt)|css|images|js)/
+        #    security: false
+        main:
+            anonymous: ~
+            pattern:  ^/
+            http_basic: ~
+            provider: db_provider
+            form_login:
+              login_path: user_login
+              check_path: user_login
+            logout:
+                  path:   /logout
+                  target: /
+                  #invalidate_session: false
+
+    access_control:
+            - { path: ^/newPost, roles: 'ROLE_USER' }
+            - { path: ^/edit, roles: 'ROLE_USER' }
+            - { path: ^/delete, roles: 'ROLE_USER' }

@@ -1,0 +1,50 @@
+<!-- app/Resources/views/base.html.twig -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+    <title>{% block title %}Test Blog{% endblock %}</title>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% block stylesheets %}
+        <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+        <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+
+<section id="wrapper">
+    <header id="header">
+        <hgroup>
+            <h2>{% block blog_title %}<a href="{{ path('blog_home') }}">Test Blog</a>{% endblock %}</h2>
+            <h3>{{ username }} </h3>
+        </hgroup>
+        <div class="top">
+            {% block navigation %}
+                <nav>
+                    <ul class="navigation">
+                        {% if not is_granted('ROLE_USER') %}
+                            <li><a href="{{ path("user_login") }}">Login</a></li>
+                            <li><a href="{{ path("user_registration") }}">Register</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('blog_home') }}">Home</a></li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li><a href="{{ path('post_new') }}">New Post</a></li>
+                            <li><a href="{{ path('user_logout') }}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endblock %}
+        </div>
+    </header>
+
+   {% block body %}{% endblock %}
+
+</section>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

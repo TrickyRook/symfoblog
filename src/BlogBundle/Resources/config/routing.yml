@@ -1,0 +1,43 @@
+blog_home:
+    path:    /{slug}
+    defaults: { _controller: BlogBundle:Page:index, slug: 1 }
+    requirements:
+        _methods: GET
+        slug: \d+
+
+user_registration:
+    path:   /register
+    defaults: { _controller: BlogBundle:Registration:register }
+
+user_login:
+    path:   /login
+    defaults: { _controller: BlogBundle:Security:login }
+
+user_logout:
+    path: /logout
+    defaults: { _controller: BlogBundle:Page:logout }
+
+post_new:
+    path: /newPost
+    defaults: { _controller: BlogBundle:Page:new }
+    requirements:
+      _method: POST
+
+post_show:
+    path: /show/{slug}
+    defaults: { _controller: BlogBundle:Page:show }
+    requirements:
+      _method: GET
+
+post_edit:
+    path: /edit/{slug}
+    defaults: { _controller: BlogBundle:Page:edit }
+    requirements:
+      _method: GET,
+      slug: \d+
+
+post_delete:
+    path: /delete/{slug}
+    defaults: { _controller: BlogBundle:Page:delete }
+    requirements:
+      _method: GET

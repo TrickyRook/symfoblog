@@ -1,0 +1,34 @@
+{# src/BlogBundle/Resources/views/Page/index.html.twig #}
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block body %}
+
+    {% block main %}
+        {% for post in posts %}
+            <article class="post">
+                <h2><a href="{{ path('post_show', { slug: post.id }) }}">{{ post.subject }}</a></h2>
+                <h3>{{ post.getPostDate() }} by {{ post.getAuthor() }}</h3><br>
+                {{ post.getTrimBody() }}
+                <br><a href="{{ path('post_show', { slug: post.id }) }}">Read More</a>
+            </article>
+            <hr><br>
+        {% else %}
+            <div class="well">no posts found</div>
+        {% endfor %}
+        {% if pages > 1 %}
+            <div align="center">
+                {% for i in 1..pages %}
+                    {% if i != curpage %}
+                        <a href="{{ path('blog_home', {slug: loop.index }) }}">{{ loop.index }}</a>
+                    {% else %}
+                        {{ loop.index }}
+                    {% endif %}
+                    {% if i != pages %}
+                        &nbsp;-&nbsp;
+                    {% endif %}
+                {% endfor%}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+{% endblock %}

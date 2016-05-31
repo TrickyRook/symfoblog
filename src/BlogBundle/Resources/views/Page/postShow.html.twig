@@ -1,0 +1,20 @@
+{# app/Resources/views/default/Page/postShow.html.twig #}
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block body %}
+    {% if app.session.flashBag.has('notice') %}
+        <div class="blogger-notice">
+            {% for msg in app.session.flashBag.get('notice') %}
+                {{ msg }}
+            {% endfor %}
+        </div><br>
+    {% endif %}
+    Posted by {{ author }} on {{ post.getPostDate() }} <br><br>
+    {% if post.auth == userid %}
+        <a href="{{ path('post_edit', { slug: post.id }) }}">Edit post</a> &nbsp;|&nbsp; <a href="{{ path('post_delete', { slug: post.id }) }}">Delete post</a>
+    {% else %}
+        (You're not an author of this post)
+    {% endif %}
+    <br><br><b>{{ post.subject }}</b><br><br>
+    {{ post.body }}
+{%  endblock %}
