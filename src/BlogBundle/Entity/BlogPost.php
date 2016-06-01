@@ -63,7 +63,7 @@ class BlogPost
 
     public function getBody()
     {
-        return $this->body;
+        return $this->body; #mb_eregi_replace('\n', '<br>', $this->body);
     }
 
     public function setBody($body)
@@ -73,7 +73,8 @@ class BlogPost
 
     public function getTrimBody()
     {
-        return (strlen($this->body) > 150) ? rtrim(substr($this->body, 0, 150)) . '...' : $this->body;
+        $p = mb_strpos($this->body, ' ', 150, 'UTF-8');
+        return mb_strlen($this->body, 'UTF-8') > 150 ? rtrim(mb_substr($this->body, 0, !$p ? 150 : $p, 'UTF-8')).'...' : $this->body;  
     }
 
     public function getPostDate()
